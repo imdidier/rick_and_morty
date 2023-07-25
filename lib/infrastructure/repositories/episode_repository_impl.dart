@@ -8,25 +8,21 @@ class EpisodeRepositoryImpl extends EpisodeRepository {
 
   @override
   Future<List<EpisodeEntity>> getEpisodeByEpisode(String episode) {
-    // TODO: implement getEpisodeByEpisode
-    throw UnimplementedError();
+    return episodeDatasourceImpl.getEpisodeByEpisode(episode);
   }
 
   @override
   Future<EpisodeEntity> getEpisodeById(int id) {
-    // TODO: implement getEpisodeById
-    throw UnimplementedError();
+    return episodeDatasourceImpl.getEpisodeById(id);
   }
 
   @override
   Future<List<EpisodeEntity>> getEpisodes({int page = 1}) {
-    // TODO: implement getEpisodes
-    throw UnimplementedError();
+    return episodeDatasourceImpl.getEpisodes(page: page);
   }
 
   @override
   Future<List<EpisodeEntity>> searchEpisode(String query) {
-    // TODO: implement searchEpisode
-    throw UnimplementedError();
+    return episodeDatasourceImpl.searchEpisode(query);
   }
 }

@@ -2,50 +2,44 @@ import 'package:rick_and_morty/domain/entities/character.dart';
 import 'package:rick_and_morty/infrastructure/datasources/character_datasource_impl.dart';
 
 import '../../domain/repositories/character_repository.dart';
+import '../models/models.dart';
 
 class CharacterRepositoryImpl extends CharacterRepository {
   final CharacterDatasourceImpl characterDatasourceImpl;
   CharacterRepositoryImpl(this.characterDatasourceImpl);
 
   @override
-  Future<List<CharacterEntity>> getCharacterByEspecies(String especies) {
-    // TODO: implement getCharacterByEspecies
-    throw UnimplementedError();
+  Future<List<ResultCharacter>> getCharacterByEspecies(String especie) {
+    return characterDatasourceImpl.getCharacterByEspecies(especie);
   }
 
   @override
-  Future<List<CharacterEntity>> getCharacterByGender(String gender) {
-    // TODO: implement getCharacterByGender
-    throw UnimplementedError();
+  Future<List<ResultCharacter>> getCharacterByGender(String gender) {
+    return characterDatasourceImpl.getCharacterByGender(gender);
   }
 
   @override
-  Future<CharacterEntity> getCharacterById(int id) {
-    // TODO: implement getCharacterById
-    throw UnimplementedError();
+  Future<ResultCharacter> getCharacterById(int id) {
+    return characterDatasourceImpl.getCharacterById(id);
   }
 
   @override
-  Future<List<CharacterEntity>> getCharacterByStatus(String status) {
-    // TODO: implement getCharacterByStatus
-    throw UnimplementedError();
+  Future<List<ResultCharacter>> getCharacterByStatus(String status) {
+    return characterDatasourceImpl.getCharacterByStatus(status);
   }
 
   @override
-  Future<List<CharacterEntity>> getCharacterByType(String type) {
-    // TODO: implement getCharacterByType
-    throw UnimplementedError();
+  Future<List<ResultCharacter>> getCharacterByType(String type) {
+    return characterDatasourceImpl.getCharacterByType(type);
   }
 
   @override
-  Future<List<CharacterEntity>> getCharacters({int page = 1}) {
-    // TODO: implement getCharacters
-    throw UnimplementedError();
+  Future<List<ResultCharacter>> getCharacters({int page = 1}) {
+    return characterDatasourceImpl.getCharacters(page: page);
   }
 
   @override
-  Future<List<CharacterEntity>> searchCharacter(String query) {
-    // TODO: implement searchCharacter
-    throw UnimplementedError();
+  Future<List<ResultCharacter>> searchCharacter(String query) {
+    return characterDatasourceImpl.searchCharacter(query);
   }
 }

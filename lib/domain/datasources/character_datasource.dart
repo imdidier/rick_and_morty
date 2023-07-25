@@ -1,11 +1,11 @@
-import '../entities/entities.dart';
+import '../../infrastructure/models/models.dart';
 
 abstract class CharacterDatasource {
-  Future<List<CharacterEntity>> getCharacters({int page = 1});
-  Future<CharacterEntity> getCharacterById(int id);
-  Future<List<CharacterEntity>> getCharacterByStatus(String status);
-  Future<List<CharacterEntity>> getCharacterByType(String type);
-  Future<List<CharacterEntity>> getCharacterByGender(String gender);
-  Future<List<CharacterEntity>> getCharacterByEspecies(String especies);
-  Future<List<CharacterEntity>> searchCharacter(String query);
+  Future<List<ResultCharacter>> getCharacters({int page = 1});
+  Future<ResultCharacter> getCharacterById(int id);
+  Future<List<ResultCharacter>> getCharacterByStatus(String status);
+  Future<List<ResultCharacter>> getCharacterByType(String type);
+  Future<List<ResultCharacter>> getCharacterByGender(String gender);
+  Future<List<ResultCharacter>> getCharacterByEspecies(String especie);
+  Future<List<ResultCharacter>> searchCharacter(String query);
 }

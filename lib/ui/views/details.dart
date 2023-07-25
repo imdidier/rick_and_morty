@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class EpisodeScreen extends StatelessWidget {
-  const EpisodeScreen({super.key});
+class DetailsView extends StatelessWidget {
+  const DetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Episode Screen'),
+        child: Text('Hola Mundo'),
       ),
     );
   }

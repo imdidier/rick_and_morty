@@ -15,7 +15,7 @@ class InfoModel {
         count: json["count"],
         pages: json["pages"],
         next: json["next"],
-        prev: json["prev"],
+        prev: json["prev"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
