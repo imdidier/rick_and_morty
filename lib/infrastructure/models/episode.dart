@@ -1,16 +1,16 @@
 import 'models.dart';
 
-class Episode {
-  final Info info;
+class EpisodeModel {
+  final InfoModel info;
   final List<ResultEpisode> results;
 
-  Episode({
+  EpisodeModel({
     required this.info,
     required this.results,
   });
 
-  factory Episode.fromJson(Map<String, dynamic> json) => Episode(
-        info: Info.fromJson(json["info"]),
+  factory EpisodeModel.fromJson(Map<String, dynamic> json) => EpisodeModel(
+        info: InfoModel.fromJson(json["info"]),
         results: List<ResultEpisode>.from(
             json["results"].map((result) => ResultCharacter.fromJson(result))),
       );

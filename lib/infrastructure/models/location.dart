@@ -1,13 +1,13 @@
-class Location {
+class LocationModel {
   final String greeting;
   final List<String> instructions;
 
-  Location({
+  LocationModel({
     required this.greeting,
     required this.instructions,
   });
 
-  factory Location.fromJson(Map<String, dynamic> json) => Location(
+  factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
         greeting: json["greeting"],
         instructions: List<String>.from(json["instructions"].map((x) => x)),
       );

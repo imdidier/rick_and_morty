@@ -1,16 +1,16 @@
 import 'models.dart';
 
-class Character {
-  final Info info;
+class CharacterModel {
+  final InfoModel info;
   final List<ResultCharacter> results;
 
-  Character({
+  CharacterModel({
     required this.info,
     required this.results,
   });
 
-  factory Character.fromJson(Map<String, dynamic> json) => Character(
-        info: Info.fromJson(json["info"]),
+  factory CharacterModel.fromJson(Map<String, dynamic> json) => CharacterModel(
+        info: InfoModel.fromJson(json["info"]),
         results: List<ResultCharacter>.from(
             json["results"].map((result) => ResultCharacter.fromJson(result))),
       );
