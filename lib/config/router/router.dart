@@ -15,5 +15,9 @@ final appRouter = GoRouter(
       path: '/episodes',
       builder: (context, state) => const EpisodeScreen(),
     ),
+    GoRoute(
+      path: '/details',
+      builder: (context, state) => const EpisodeScreen(),
+    ),
   ],
 );
