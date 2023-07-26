@@ -11,8 +11,8 @@ class LocationDatasourceImpl extends LocationDatasource {
   );
 
   List<ResultLocation> _jsonToCharacter(Map<String, dynamic> json) {
-    final LocationModel characterresp = LocationModel.fromJson(json);
-    final List<ResultLocation> locations = characterresp.results.toList();
+    final LocationModel locationResp = LocationModel.fromJson(json);
+    final List<ResultLocation> locations = locationResp.results.toList();
     return locations;
   }
 

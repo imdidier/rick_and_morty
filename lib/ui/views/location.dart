@@ -70,7 +70,7 @@ class _LocationViewState extends State<LocationView> {
               onTap: () async {
                 await locationProvider.getLocationById(location.id);
                 // ignore: use_build_context_synchronously
-                context.go('/home/0/locations/${location.id}');
+                context.go('/home/0/location/${location.id}');
               },
               trailing: const Icon(Icons.arrow_forward_ios_rounded),
               // leading: _Image(character: location),
@@ -78,7 +78,7 @@ class _LocationViewState extends State<LocationView> {
                 location.name,
                 style: styleText,
               ),
-              // subtitle: _ItemStatus(character: character),
+              subtitle: Text(location.type),
             ),
           );
         },

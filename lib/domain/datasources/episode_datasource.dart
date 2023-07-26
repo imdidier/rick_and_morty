@@ -1,8 +1,8 @@
-import '../entities/entities.dart';
+import '../../infrastructure/models/models.dart';
 
 abstract class EpisodeDatasource {
-  Future<List<EpisodeEntity>> getEpisodes({int page = 1});
-  Future<EpisodeEntity> getEpisodeById(int id);
-  Future<List<EpisodeEntity>> getEpisodeByEpisode(String episode);
-  Future<List<EpisodeEntity>> searchEpisode(String query);
+  Future<List<ResultEpisode>> getEpisodes({int page = 1});
+  Future<ResultEpisode> getEpisodeById(int id);
+  Future<List<ResultEpisode>> getEpisodeByEpisode(String episode);
+  Future<List<ResultEpisode>> searchEpisode(String query);
 }
