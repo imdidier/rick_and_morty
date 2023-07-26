@@ -12,7 +12,7 @@ class EpisodeModel {
   factory EpisodeModel.fromJson(Map<String, dynamic> json) => EpisodeModel(
         info: InfoModel.fromJson(json["info"]),
         results: List<ResultEpisode>.from(
-            json["results"].map((result) => ResultCharacter.fromJson(result))),
+            json["results"].map((result) => ResultEpisode.fromJson(result))),
       );
 
   Map<String, dynamic> toJson() => {

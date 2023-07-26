@@ -1,10 +1,10 @@
 import 'entities.dart';
 
-class LocationEntity {
+class ResultEntity {
   InfoEntity info;
   List<ResultLocationEntity> results;
 
-  LocationEntity({
+  ResultEntity({
     required this.info,
     required this.results,
   });

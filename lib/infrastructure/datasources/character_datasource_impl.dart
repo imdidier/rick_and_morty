@@ -28,9 +28,12 @@ class CharacterDatasourceImpl extends CharacterDatasource {
   }
 
   @override
-  Future<ResultCharacter> getCharacterById(int id) {
-    // TODO: implement getCharacterById
-    throw UnimplementedError();
+  Future<ResultCharacter> getCharacterById(int id) async {
+    final response = await dio.get(
+      'character/$id',
+    );
+    ResultCharacter characterresp = ResultCharacter.fromJson(response.data);
+    return characterresp;
   }
 
   @override
@@ -48,7 +51,7 @@ class CharacterDatasourceImpl extends CharacterDatasource {
   @override
   Future<List<ResultCharacter>> getCharacters({int page = 1}) async {
     final response = await dio.get(
-      'character',
+      'character/?page=$page',
     );
     return _jsonToCharacter(response.data);
   }

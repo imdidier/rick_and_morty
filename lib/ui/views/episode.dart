@@ -5,8 +5,9 @@ class EpisodeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      appBar: AppBar(title: const Text('Episodes'), centerTitle: true),
+      body: const Center(
         child: Text('Episode View'),
       ),
     );

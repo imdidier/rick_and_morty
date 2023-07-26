@@ -78,6 +78,6 @@ class ResultCharacter {
         "image": image,
         "episode": List<String>.from(episode.map((episode) => episode)),
         "url": url,
-        "created": created.toIso8601String(),
+        "created": created,
       };
 }

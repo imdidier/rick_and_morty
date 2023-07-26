@@ -1,8 +1,8 @@
-import '../entities/entities.dart';
+import '../../infrastructure/models/location.dart';
 
 abstract class LocationDatasource {
-  Future<List<LocationEntity>> getLocations({int page = 1});
-  Future<LocationEntity> geLocationById(int id);
-  Future<List<LocationEntity>> getLocationByDimension(String dimension);
-  Future<List<LocationEntity>> searchLocation(String query);
+  Future<List<ResultLocation>> getLocations({int page = 1});
+  Future<ResultLocation> getLocationById(int id);
+  Future<List<ResultLocation>> getLocationByDimension(String dimension);
+  Future<List<ResultLocation>> searchLocation(String query);
 }

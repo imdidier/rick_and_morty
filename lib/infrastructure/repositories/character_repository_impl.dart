@@ -1,4 +1,3 @@
-import 'package:rick_and_morty/domain/entities/character.dart';
 import 'package:rick_and_morty/infrastructure/datasources/character_datasource_impl.dart';
 
 import '../../domain/repositories/character_repository.dart';
