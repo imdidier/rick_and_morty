@@ -18,7 +18,6 @@ class CharacterView extends StatefulWidget {
 class _CharacterViewState extends State<CharacterView> {
   late CharacterProvider characterProvider;
   List<ResultCharacter> characters = [];
-  List<Widget> allItems = [];
   bool isfirstTime = true;
 
   @override
@@ -52,7 +51,13 @@ class _CharacterViewState extends State<CharacterView> {
 
   @override
   Widget build(BuildContext context) {
+    if (characters.isEmpty) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     final styleText = Theme.of(context).textTheme.titleMedium;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Characters'), centerTitle: true),
       body: ListView.builder(

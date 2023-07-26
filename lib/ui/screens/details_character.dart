@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../infrastructure/models/models.dart';
 import '../providers/character_provider.dart';
 
 class DetailsCharacterScreen extends StatefulWidget {
-  static const String name = 'details-screen';
+  static const String name = 'details-character-screen';
 
   final int characterId;
   const DetailsCharacterScreen({super.key, required this.characterId});
@@ -129,6 +130,10 @@ class _CustomSliverAppbar extends StatelessWidget {
   ) {
     final size = MediaQuery.of(context).size;
     return SliverAppBar(
+      leading: IconButton(
+        onPressed: () => context.go('/home/0'),
+        icon: const Icon(Icons.arrow_back_ios_new),
+      ),
       backgroundColor: Colors.black26,
       expandedHeight: size.height * 0.425,
       foregroundColor: Colors.white,

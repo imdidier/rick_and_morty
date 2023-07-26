@@ -28,7 +28,7 @@ class LocationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getCharacterById(int locationId) async {
+  getLocationById(int locationId) async {
     currentResultLocation = await repository.getLocationById(locationId);
     notifyListeners();
   }

@@ -21,14 +21,14 @@ final appRouter = GoRouter(
             return DetailsCharacterScreen(characterId: int.parse(characterId));
           },
         ),
-        // GoRoute(
-        //   path: 'locations/:id',
-        //   name: DetailsScreen.name,
-        //   builder: (context, state) {
-        //     final String characterId = state.pathParameters['id'] ?? 'no-id';
-        //     return DetailsScreen(characterId: int.parse(characterId));
-        //   },
-        // ),
+        GoRoute(
+          path: 'locations/:id',
+          name: DetailsLocationScreen.name,
+          builder: (context, state) {
+            final String locationId = state.pathParameters['id'] ?? 'no-id';
+            return DetailsLocationScreen(characterId: int.parse(locationId));
+          },
+        ),
       ],
     ),
     GoRoute(

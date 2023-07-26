@@ -1,4 +1,6 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:rick_and_morty/ui/providers/location_provider.dart';
 
@@ -13,11 +15,7 @@ class LocationView extends StatefulWidget {
 
 class _LocationViewState extends State<LocationView> {
   late LocationProvider locationProvider;
-
   List<ResultLocation> locations = [];
-
-  List<Widget> allItems = [];
-
   bool isfirstTime = true;
 
   @override
@@ -39,10 +37,6 @@ class _LocationViewState extends State<LocationView> {
       isfirstTime = false;
     }
     locations = locationProvider.listLocations;
-    // List.generate(
-    //   locations.length,
-    //   (index) => allItems.add(ItemCharacter(resultCharacter: location[index])),
-    // );
   }
 
   final ScrollController _scrollController = ScrollController();
@@ -55,25 +49,39 @@ class _LocationViewState extends State<LocationView> {
 
   @override
   Widget build(BuildContext context) {
-    if (allItems.isEmpty) {
+    if (locations.isEmpty) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
+    final styleText = Theme.of(context).textTheme.titleMedium;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Locations'), centerTitle: true),
-      body: SingleChildScrollView(
+      body: ListView.builder(
         controller: _scrollController,
-        child: SizedBox(
-          width: double.infinity,
-          child: Wrap(
-            alignment: WrapAlignment.spaceAround,
-            runSpacing: 5,
-            spacing: 10,
-            direction: Axis.horizontal,
-            children: allItems,
-          ),
-        ),
+        itemCount: locations.length,
+        itemBuilder: (context, index) {
+          ResultLocation location = locations[index];
+          return FadeInRightBig(
+            child: ListTile(
+              autofocus: true,
+              enableFeedback: true,
+              onTap: () async {
+                await locationProvider.getLocationById(location.id);
+                // ignore: use_build_context_synchronously
+                context.go('/home/0/locations/${location.id}');
+              },
+              trailing: const Icon(Icons.arrow_forward_ios_rounded),
+              // leading: _Image(character: location),
+              title: Text(
+                location.name,
+                style: styleText,
+              ),
+              // subtitle: _ItemStatus(character: character),
+            ),
+          );
+        },
       ),
     );
   }
