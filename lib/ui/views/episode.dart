@@ -67,7 +67,7 @@ class _EpisodeViewState extends State<EpisodeView> {
               autofocus: true,
               enableFeedback: true,
               onTap: () async {
-                await episodeProvider.getLocationById(episode.id);
+                await episodeProvider.getEpisodeById(episode.id);
                 //ignore: use_build_context_synchronously
                 context.go('/home/0/episode/${episode.id}');
               },

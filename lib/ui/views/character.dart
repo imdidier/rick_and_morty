@@ -67,8 +67,6 @@ class _CharacterViewState extends State<CharacterView> {
           ResultCharacter character = characters[index];
           return FadeInRightBig(
             child: ListTile(
-              autofocus: true,
-              enableFeedback: true,
               onTap: () async {
                 await characterProvider.getCharacterById(character.id);
                 // ignore: use_build_context_synchronously

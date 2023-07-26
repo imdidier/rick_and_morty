@@ -35,7 +35,7 @@ class Info {
   factory Info.fromJson(Map<String, dynamic> json) => Info(
         count: json["count"],
         pages: json["pages"],
-        next: json["next"],
+        next: json["next"] ?? '',
         prev: json["prev"],
       );
 

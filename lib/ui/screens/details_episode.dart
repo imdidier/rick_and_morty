@@ -1,14 +1,19 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:rick_and_morty/infrastructure/models/character.dart';
 import 'package:rick_and_morty/infrastructure/models/episode.dart';
 import 'package:rick_and_morty/ui/providers/episode_provider.dart';
+
+import '../../config/theme/theme.dart';
+import '../providers/character_provider.dart';
 
 class DetailsEpisodeScreen extends StatefulWidget {
   static const String name = 'details-episode-screen';
 
-  final int characterId;
-  const DetailsEpisodeScreen({super.key, required this.characterId});
+  final int episodeId;
+  const DetailsEpisodeScreen({super.key, required this.episodeId});
 
   @override
   State<DetailsEpisodeScreen> createState() => _DetailsEpisodeScreenState();
@@ -16,7 +21,11 @@ class DetailsEpisodeScreen extends StatefulWidget {
 
 class _DetailsEpisodeScreenState extends State<DetailsEpisodeScreen> {
   late EpisodeProvider episodeProvider;
+  late CharacterProvider characterProvider;
+  List<ResultCharacter> listResultCharacter = [];
+
   late ResultEpisode episode;
+  bool isFristTime = true;
 
   @override
   void initState() {
@@ -24,167 +33,128 @@ class _DetailsEpisodeScreenState extends State<DetailsEpisodeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() async {
     episodeProvider = context.watch<EpisodeProvider>();
-    episodeProvider.getLocationById(widget.characterId);
+    characterProvider = context.watch<CharacterProvider>();
+    episodeProvider.getEpisodeById(widget.episodeId);
     episode = episodeProvider.currentResultEpisode;
+    if (isFristTime) {
+      isFristTime = false;
+
+      await Future.forEach(episode.characters, (element) async {
+        int characterId = int.parse(element.split('/').last);
+        await characterProvider.getCharacterById(characterId);
+        listResultCharacter.add(characterProvider.currentResultCharacter);
+      });
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        physics: const ClampingScrollPhysics(),
-        slivers: [
-          _CustomSliverAppbar(
-            episode: episode,
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => _Details(episode: episode),
-              childCount: 1,
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        title: const Text(
+          'Characters related to the episode',
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () => context.go('/home/2'),
+          icon: const Icon(Icons.arrow_back_ios_new),
+        ),
+      ),
+      body: _Details(
+        characters: listResultCharacter,
       ),
     );
   }
 }
 
 class _Details extends StatelessWidget {
-  final ResultEpisode episode;
-  const _Details({required this.episode});
+  final List<ResultCharacter> characters;
+  const _Details({required this.characters});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final textStyle = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(20),
-              //   child: Image.network(
-              //     location.image,
-              //     fit: BoxFit.cover,
-              //     width: size.width * 0.3,
-              //   ),
-              // ),
-              const SizedBox(width: 15),
-              SizedBox(
-                width: size.width * 0.6,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      episode.name,
-                      style: textStyle.titleLarge,
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                    ),
-                    // Text(
-                    //   'Gender: ${location.gender}',
-                    // ),
-                    // Text(
-                    //   'Especie: ${character.species}',
-                    // ),
-                    // Text(
-                    //   'Status: ${character.status}',
-                    //   style: TextStyle(
-                    //     color: character.status == 'Dead'
-                    //         ? Colors.red
-                    //         : character.status == 'Alive'
-                    //             ? Colors.green
-                    //             : Colors.black,
-                    //   ),
-                    // ),
-                    // Text(
-                    //   'Origin: ${character.origin['name']}',
-                    //   maxLines: 1,
-                    // ),
-                    // Text(
-                    //   'Created: ${character.created.toLocal().toString()}',
-                    // ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 60),
-      ],
-    );
-  }
-}
-
-class _CustomSliverAppbar extends StatelessWidget {
-  final ResultEpisode episode;
-  const _CustomSliverAppbar({required this.episode});
-
-  @override
-  Widget build(
-    BuildContext context,
-  ) {
-    final size = MediaQuery.of(context).size;
-    return SliverAppBar(
-      leading: IconButton(
-        onPressed: () => context.go('/home/2'),
-        icon: const Icon(Icons.arrow_back_ios_new),
-      ),
-      backgroundColor: Colors.black26,
-      expandedHeight: size.height * 0.425,
-      foregroundColor: Colors.white,
-      flexibleSpace: const FlexibleSpaceBar(
-        background: Stack(
-          children: [
-            // SizedBox.expand(
-            //   child: Image.network(
-            //     location.image,
-            //     fit: BoxFit.contain,
-            //   ),
-            // ),
-            _CustomGradient(
-              colors: [
-                Colors.black38,
-                Colors.transparent,
-              ],
-              stops: [0.0, 0.3],
-              begin: Alignment.topLeft,
-              end: Alignment.centerRight,
+    if (characters.isEmpty) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    final textStyle = Theme.of(context).textTheme.titleMedium;
+    return ListView.builder(
+      itemCount: characters.length,
+      itemBuilder: (context, index) {
+        ResultCharacter character = characters[index];
+        return FadeInRightBig(
+          child: ListTile(
+            onTap: () async {
+              // ignore: use_build_context_synchronously
+              context.go('/home/0/character/${character.id}', extra: 'episode');
+            },
+            trailing: const Icon(Icons.arrow_forward_ios_rounded),
+            autofocus: true,
+            enableFeedback: true,
+            leading: _Image(character: character),
+            title: Text(
+              character.name,
+              style: textStyle,
             ),
-          ],
-        ),
-      ),
+            subtitle: _ItemStatus(character: character),
+          ),
+        );
+      },
     );
   }
 }
 
-class _CustomGradient extends StatelessWidget {
-  final List<double> stops;
-  final Alignment begin;
-  final Alignment end;
-  final List<Color> colors;
-  const _CustomGradient({
-    required this.stops,
-    required this.begin,
-    required this.end,
-    required this.colors,
+class _ItemStatus extends StatelessWidget {
+  const _ItemStatus({
+    required this.character,
   });
 
+  final ResultCharacter character;
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: colors,
-            begin: begin,
-            stops: stops,
-            end: end,
-          ),
-        ),
+    return Text(
+      character.status,
+      style: TextStyle(
+        color: character.status == 'Dead'
+            ? Colors.red
+            : character.status == 'Alive'
+                ? Colors.green
+                : AppTheme().getTheme().brightness.name == 'dark'
+                    ? Colors.white
+                    : Colors.black,
+      ),
+    );
+  }
+}
+
+class _Image extends StatelessWidget {
+  const _Image({
+    required this.character,
+  });
+
+  final ResultCharacter character;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Image.network(
+        character.image,
+        fit: BoxFit.cover,
+        height: 200,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress != null) {
+            return ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset('assets/image-no-found.jpg'));
+          }
+          return FadeIn(child: child);
+        },
       ),
     );
   }

@@ -28,7 +28,7 @@ class EpisodeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getLocationById(int episodeId) async {
+  getEpisodeById(int episodeId) async {
     currentResultEpisode = await repository.getEpisodeById(episodeId);
     notifyListeners();
   }

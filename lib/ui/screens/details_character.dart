@@ -9,7 +9,9 @@ class DetailsCharacterScreen extends StatefulWidget {
   static const String name = 'details-character-screen';
 
   final int characterId;
-  const DetailsCharacterScreen({super.key, required this.characterId});
+  final String extra;
+  const DetailsCharacterScreen(
+      {super.key, required this.characterId, required this.extra});
 
   @override
   State<DetailsCharacterScreen> createState() => _DetailsCharacterScreenState();
@@ -35,6 +37,7 @@ class _DetailsCharacterScreenState extends State<DetailsCharacterScreen> {
         slivers: [
           _CustomSliverAppbar(
             character: character,
+            type: widget.extra,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -122,16 +125,20 @@ class _Details extends StatelessWidget {
 
 class _CustomSliverAppbar extends StatelessWidget {
   final ResultCharacter character;
-  const _CustomSliverAppbar({required this.character});
+  final String type;
+  const _CustomSliverAppbar({required this.character, required this.type});
 
   @override
-  Widget build(
-    BuildContext context,
-  ) {
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    int indexView = type == 'locations'
+        ? 1
+        : type == 'episode'
+            ? 2
+            : 0;
     return SliverAppBar(
       leading: IconButton(
-        onPressed: () => context.go('/home/0'),
+        onPressed: () => context.pop('/home/$indexView'),
         icon: const Icon(Icons.arrow_back_ios_new),
       ),
       backgroundColor: Colors.black26,

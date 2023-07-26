@@ -18,7 +18,11 @@ final appRouter = GoRouter(
           name: DetailsCharacterScreen.name,
           builder: (context, state) {
             final String characterId = state.pathParameters['id'] ?? 'no-id';
-            return DetailsCharacterScreen(characterId: int.parse(characterId));
+            final String extra = state.extra.toString();
+            return DetailsCharacterScreen(
+              characterId: int.parse(characterId),
+              extra: extra,
+            );
           },
         ),
         GoRoute(
@@ -26,7 +30,7 @@ final appRouter = GoRouter(
           name: DetailsLocationScreen.name,
           builder: (context, state) {
             final String locationId = state.pathParameters['id'] ?? 'no-id';
-            return DetailsLocationScreen(characterId: int.parse(locationId));
+            return DetailsLocationScreen(locationId: int.parse(locationId));
           },
         ),
         GoRoute(
@@ -34,7 +38,7 @@ final appRouter = GoRouter(
           name: DetailsEpisodeScreen.name,
           builder: (context, state) {
             final String episodeId = state.pathParameters['id'] ?? 'no-id';
-            return DetailsEpisodeScreen(characterId: int.parse(episodeId));
+            return DetailsEpisodeScreen(episodeId: int.parse(episodeId));
           },
         ),
       ],
